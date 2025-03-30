@@ -1,9 +1,8 @@
-/* src/styles/global.css */
 body {
   margin: 0;
   padding: 0;
-  background-color: #f3f4f6; /* cinza claro */
-  color: #111827; /* texto escuro */
+  background-color: #f3f4f6; 
+  color: #111827; 
   font-family: 'Inter', sans-serif;
 }
 
@@ -37,11 +36,12 @@ body {
 
 .input-group label {
   display: block;
-  font-weight: bold; /* 👈 agora sim, negrito mesmo */
+  font-weight: bold;
   margin-bottom: 0.3rem;
 }
 
-.input-group input {
+.input-group input, 
+.senha-wrapper input {
   width: 100%;
   padding: 0.5rem;
   border: 1px solid #ccc;
@@ -76,12 +76,7 @@ body {
   position: relative;
 }
 
-.senha-wrapper input {
-  width: 100%;
-  border: 1px solid #ccc;
-  border-radius: 6px;
-  font-size: 1rem;
-}
+
 
 .senha-icon {
   position: absolute;
@@ -97,3 +92,10 @@ body {
   height: 100%;
 }
 
+.datepicker-input {
+  width: 100%;
+  padding: 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 1rem;
+}
