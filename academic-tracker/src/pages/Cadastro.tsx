@@ -8,7 +8,7 @@ export default function Cadastro() {
   const [email, setEmail] = useState("");
   const [senha, setSenha] = useState("");
   const [confirmarSenha, setConfirmarSenha] = useState("");
-  const [tipoUsuario, setTipoUsuario] = useState("aluno"); // 👈 novo state
+  const [tipoUsuario, setTipoUsuario] = useState("aluno"); 
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +18,7 @@ export default function Cadastro() {
       return;
     }
 
-    // Aqui você pode enviar os dados pra API
+
     alert(`Cadastro realizado com sucesso como ${tipoUsuario}!`);
     navigate("/");
   };
@@ -88,7 +88,7 @@ export default function Cadastro() {
             />
           </div>
 
-          {/* 👇 Novo grupo de seleção de tipo de usuário */}
+          {}
           <div className="input-group">
             <label>Tipo de usuário</label>
             <div style={{ display: "flex", gap: "1rem", marginTop: "0.5rem" }}>

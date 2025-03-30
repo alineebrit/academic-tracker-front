@@ -1,4 +1,4 @@
-/* Garante que o conteúdo ocupe toda a tela */
+
 .dashboard-container {
     width: 100vw;
     height: 100vh;
@@ -9,30 +9,33 @@
     padding: 0;
   }
   
-
   .dashboard-header {
-    background-color:#18181B;
-    color: white;
+    position: fixed;
+    top: 0;
+    right: 0;
+    width: 100%;
+    background-color: #18181B;
+    border-bottom: 1px solid #ccc;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-wrap: wrap; 
     padding: 1rem 2rem;
-    width: 100%;
-    box-sizing: border-box;
+    z-index: 100;
   }
   
-  /* Logo */
+  .nav-links {
+    display: flex;
+    flex-wrap: wrap; 
+    gap: 1.5rem;
+    justify-content: flex-end;
+  }
+  
   .logo {
     font-size: 1.5rem;
     font-weight: bold;
   }
-  
-  /* Navegação */
-  .nav-links {
-    display: flex;
-    gap: 1.5rem;
-  }
-  
+    
   .nav-links a {
     color: white;
     text-decoration: none;
@@ -43,7 +46,6 @@
     text-decoration: underline;
   }
   
-  /* Conteúdo central */
   .dashboard-main {
     flex: 1;
     display: flex;
