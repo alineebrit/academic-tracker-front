@@ -1,5 +1,6 @@
 import {useState, useRef, FormEvent} from "react";
 import {FilePlus} from "lucide-react";
+import Header from "../../components/Header";
 
 export interface Note {
     id: number;
@@ -92,110 +93,115 @@ export default function Note() {
     };
 
     return (
-        <div className="container">
-            <div className="login-box">
-                <div
-                    className="note-header"
-                    style={{
-                        marginBottom: "1.5rem",
-                        display: "flex",
-                        alignItems: "center",
-                        gap: "0.5rem",
-                    }}
-                >
-                    <FilePlus size={24} />
-                    <h2>{editingId ? "Editar note" : "Criar note"}</h2>
+        <>
+            <Header />
+            <div className="container">
+                <div className="login-box">
+                    <div
+                        className="note-header"
+                        style={{
+                            marginBottom: "1.5rem",
+                            display: "flex",
+                            alignItems: "center",
+                            gap: "0.5rem",
+                        }}
+                    >
+                        <FilePlus size={24} />
+                        <h2>{editingId ? "Editar note" : "Criar note"}</h2>
+                    </div>
+
+                    <form onSubmit={handleSubmit} className="atividades-form">
+                        <div className="input-group">
+                            <label>Título *</label>
+                            <input
+                                type="text"
+                                name="title"
+                                value={noteForm.title || ""}
+                                onChange={handleChange}
+                                placeholder="Digite o título"
+                                required
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label>Grupo ID *</label>
+                            <input
+                                type="number"
+                                name="grupoId"
+                                value={noteForm.grupoId ?? ""}
+                                onChange={handleChange}
+                                placeholder="Digite o ID do grupo"
+                                required
+                            />
+                        </div>
+
+                        <div className="input-group">
+                            <label>Conteúdo</label>
+                            <textarea
+                                name="content"
+                                value={noteForm.content || ""}
+                                onChange={handleChange}
+                                placeholder="Digite o conteúdo..."
+                                ref={textareaRef}
+                                rows={3}
+                            />
+                        </div>
+
+                        <button type="submit" className="salvar-atividade">
+                            {editingId ? "Atualizar note" : "Salvar note"}
+                        </button>
+                    </form>
                 </div>
 
-                <form onSubmit={handleSubmit} className="atividades-form">
-                    <div className="input-group">
-                        <label>Título *</label>
-                        <input
-                            type="text"
-                            name="title"
-                            value={noteForm.title || ""}
-                            onChange={handleChange}
-                            placeholder="Digite o título"
-                            required
-                        />
-                    </div>
-
-                    <div className="input-group">
-                        <label>Grupo ID *</label>
-                        <input
-                            type="number"
-                            name="grupoId"
-                            value={noteForm.grupoId ?? ""}
-                            onChange={handleChange}
-                            placeholder="Digite o ID do grupo"
-                            required
-                        />
-                    </div>
-
-                    <div className="input-group">
-                        <label>Conteúdo</label>
-                        <textarea
-                            name="content"
-                            value={noteForm.content || ""}
-                            onChange={handleChange}
-                            placeholder="Digite o conteúdo..."
-                            ref={textareaRef}
-                            rows={3}
-                        />
-                    </div>
-
-                    <button type="submit" className="salvar-atividade">
-                        {editingId ? "Atualizar note" : "Salvar note"}
-                    </button>
-                </form>
-            </div>
-
-            {notes.length > 0 && (
-                <div
-                    style={{
-                        marginTop: "2rem",
-                        textAlign: "left",
-                        width: "100%",
-                        maxWidth: "600px",
-                    }}
-                >
-                    <h3>📝 notes Criadas:</h3>
-                    <ul>
-                        {notes.map((n) => (
-                            <li
-                                key={n.id}
-                                style={{
-                                    marginBottom: "1rem",
-                                    padding: "0.75rem",
-                                    backgroundColor: "#f9fafb",
-                                    border: "1px solid #e5e7eb",
-                                    borderRadius: "6px",
-                                }}
-                            >
-                                <strong>{n.title}</strong>
-                                <br />
-                                Grupo: {n.grupoId}
-                                <br />
-                                {n.content || "Sem conteúdo"}
-                                <div
+                {notes.length > 0 && (
+                    <div
+                        style={{
+                            marginTop: "2rem",
+                            textAlign: "left",
+                            width: "100%",
+                            maxWidth: "600px",
+                        }}
+                    >
+                        <h3>📝 notes Criadas:</h3>
+                        <ul>
+                            {notes.map((n) => (
+                                <li
+                                    key={n.id}
                                     style={{
-                                        marginTop: "0.5rem",
-                                        display: "flex",
-                                        gap: "0.5rem",
+                                        marginBottom: "1rem",
+                                        padding: "0.75rem",
+                                        backgroundColor: "#f9fafb",
+                                        border: "1px solid #e5e7eb",
+                                        borderRadius: "6px",
                                     }}
                                 >
-                                    <button onClick={() => handleEditar(n)}>
-                                        ✏️ Editar
-                                    </button>
-                                    <button onClick={() => handleExcluir(n.id)}>
-                                        🗑️ Excluir
-                                    </button>
-                                </div>
-                            </li>
-                        ))}
-                    </ul>
-                </div>
-            )}
-        </div>
+                                    <strong>{n.title}</strong>
+                                    <br />
+                                    Grupo: {n.grupoId}
+                                    <br />
+                                    {n.content || "Sem conteúdo"}
+                                    <div
+                                        style={{
+                                            marginTop: "0.5rem",
+                                            display: "flex",
+                                            gap: "0.5rem",
+                                        }}
+                                    >
+                                        <button onClick={() => handleEditar(n)}>
+                                            ✏️ Editar
+                                        </button>
+                                        <button
+                                            onClick={() => handleExcluir(n.id)}
+                                        >
+                                            🗑️ Excluir
+                                        </button>
+                                    </div>
+                                </li>
+                            ))}
+                        </ul>
+                    </div>
+                )}
+            </div>
+        </>
     );
 }

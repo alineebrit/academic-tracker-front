@@ -13,23 +13,6 @@ import Note from "./pages/Notes/index";
 
 import PrivateRoute from "./routes/PrivateRoute";
 import {AuthProvider} from "./contexts/AuthContext";
-// import Header from "./components/Header/index";
-
-// function LayoutWrapper({children}: {children: React.ReactNode}) {
-//     const location = useLocation();
-//     const publicRoutes = ["/", "/cadastro"];
-//     const isPublicPage = publicRoutes.includes(location.pathname);
-
-//     return (
-//         <div className="w-full h-full min-h-screen bg-white text-gray-900">
-//             {!isPublicPage && <Header />}
-
-//             <main className={isPublicPage ? "public-main" : "dashboard-main"}>
-//                 {children}
-//             </main>
-//         </div>
-//     );
-// }
 
 const AppRoutes = () => {
     return (

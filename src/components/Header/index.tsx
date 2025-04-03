@@ -2,17 +2,62 @@ import "./style.css";
 
 const Header: React.FC = () => {
     return (
-        <header className="dashboard-header">
-            <div className="logo">Academic Tracker</div>
-            <nav className="nav-links">
-                <a href="/dashboard">Início</a>
-                <a href="/turmas">Turmas</a>
-                <a href="/grupos">Grupos</a>
-                <a href="/note">Note</a>
-                <a href="/atividades">Atividade</a>
-                <a href="/perfil">Perfil</a>
-            </nav>
-        </header>
+        <>
+            <header className="dashboard-header">
+                <div className="logo-wrapper">
+                    <img
+                        src="../../../AcademicTrackerWoutBackground.png"
+                        alt="Academic Tracker"
+                    />
+                </div>
+
+                <nav className="nav-links">
+                    <a href="/dashboard" title="Home">
+                        <img
+                            className="icon"
+                            src="../../../home.png"
+                            alt="Início"
+                        />
+                    </a>
+                    <a href="/turma" title="Turmas">
+                        <img
+                            className="icon"
+                            src="../../../class.png"
+                            alt="Turma"
+                        />
+                    </a>
+                    <a href="/grupos" title="Grupos">
+                        <img
+                            className="icon"
+                            src="../../../group.png"
+                            alt="Grupo"
+                        />
+                    </a>
+                    <a href="/note" title="Anotações">
+                        <img
+                            className="icon"
+                            src="../../../notes.png"
+                            alt="Notes"
+                        />
+                    </a>
+                    <a href="/atividades">
+                        <img
+                            className="icon"
+                            src="../../../homework.png"
+                            alt="Atividade"
+                        />
+                    </a>
+                    <a href="/perfil">
+                        <img
+                            className="icon"
+                            src="../../../user.png"
+                            alt="PErfil"
+                        />
+                    </a>
+                </nav>
+            </header>
+            <div className="separator"></div>
+        </>
     );
 };
 
