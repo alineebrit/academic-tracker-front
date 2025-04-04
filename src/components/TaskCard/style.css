@@ -1,0 +1,14 @@
+.kanban-task {
+    background-color: white;
+    border-radius: 6px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+    margin-bottom: 12px;
+    cursor: grab;
+    transition: transform 0.2s;
+}
+
+.kanban-task:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}

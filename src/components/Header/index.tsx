@@ -19,7 +19,7 @@ const Header: React.FC = () => {
                             alt="Início"
                         />
                     </a>
-                    <a href="/turma" title="Turmas">
+                    <a href="/turmas" title="Turmas">
                         <img
                             className="icon"
                             src="../../../class.png"
@@ -33,7 +33,7 @@ const Header: React.FC = () => {
                             alt="Grupo"
                         />
                     </a>
-                    <a href="/note" title="Anotações">
+                    <a href="/notes" title="Anotações">
                         <img
                             className="icon"
                             src="../../../notes.png"
