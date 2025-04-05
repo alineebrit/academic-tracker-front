@@ -12,6 +12,7 @@ import Note from "./pages/Notes/index";
 import Dashboard from "./pages/Dashboard/index";
 import PrivateRoute from "./routes/PrivateRoute";
 import {AuthProvider} from "./contexts/AuthContext";
+import PerfilPage from "./pages/Perfil";
 
 const AppRoutes = () => {
     return (
@@ -57,6 +58,14 @@ const AppRoutes = () => {
                 element={
                     <PrivateRoute>
                         <Atividades />
+                    </PrivateRoute>
+                }
+            />
+            <Route
+                path="/perfil"
+                element={
+                    <PrivateRoute>
+                        <PerfilPage />
                     </PrivateRoute>
                 }
             />

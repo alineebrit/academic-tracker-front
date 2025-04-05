@@ -4,14 +4,7 @@ import "react-datepicker/dist/react-datepicker.css";
 import "./style.css";
 import {ptBR} from "date-fns/locale";
 import Header from "../../components/Header";
-
-interface Atividade {
-    id?: number;
-    title: string;
-    description: string | null;
-    dueDate: Date | null;
-    grupoId: number | null;
-}
+import {Atividade} from "../../types/Atividade";
 
 export default function Atividades() {
     const [atividades, setAtividades] = useState<Atividade[]>([]);
