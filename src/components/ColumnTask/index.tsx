@@ -1,16 +1,22 @@
 import React, {useRef, useEffect} from "react";
 import {useDrop} from "react-dnd";
 import TaskCard from "../TaskCard";
-import {Task} from "../../types/Task";
+import {statusTask, Task} from "../../types/Task";
 import "./style.css";
 
 type ColumnProps = {
     status: string;
     tasks: Task[];
+    description: string;
     moveTask: (taskId: string, newStatus: string) => void;
 };
 
-const ColumnTask: React.FC<ColumnProps> = ({status, tasks, moveTask}) => {
+const ColumnTask: React.FC<ColumnProps> = ({
+    status,
+    tasks,
+    description,
+    moveTask,
+}) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
     const [{isOver}, drop] = useDrop({
@@ -28,13 +34,14 @@ const ColumnTask: React.FC<ColumnProps> = ({status, tasks, moveTask}) => {
     }, [drop]);
 
     return (
-        <div ref={ref} className={`kanban-column ${isOver ? "hovered" : ""}`}>
-            <h2 className="kanban-column-title">{status}</h2>
-            {tasks
-                .filter((task) => task.status === status)
-                .map((task) => (
-                    <TaskCard key={task.id} task={task} />
-                ))}
+        <div ref={ref} className={`kanban-column ${isOver && "hovered"} `}>
+            <h2 className="kanban-column-title">{description}</h2>
+
+            {tasks.length > 0
+                ? tasks
+                      .filter((task) => task.status.toString() === status)
+                      .map((task) => <TaskCard key={task.id} task={task} />)
+                : ""}
         </div>
     );
 };

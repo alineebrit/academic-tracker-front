@@ -30,6 +30,7 @@ const TaskCard: React.FC<TaskCardProps> = ({task}) => {
             style={{opacity: isDragging ? 0.5 : 1}}
         >
             {task.title}
+            {task.description}
         </div>
     );
 };
