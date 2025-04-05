@@ -24,12 +24,18 @@ const TaskList: React.FC = () => {
             });
     }, []);
 
-    const moveTask = (taskId: string, newStatus: string) => {
-        setTasks((prev) => {
+    const moveTask = async (taskId: string, newStatus: statusTask) => {
+        setTasks((prev) =>
             prev.map((task) =>
                 task.id === taskId ? {...task, status: newStatus} : task
-            );
-        });
+            )
+        );
+
+        try {
+            await tasksApi.update(taskId, {status: newStatus});
+        } catch (error) {
+            console.error("Não foi possível atualizar a raia", error);
+        }
     };
 
     if (isLoading) {

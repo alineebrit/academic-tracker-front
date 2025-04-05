@@ -8,7 +8,7 @@ type ColumnProps = {
     status: string;
     tasks: Task[];
     description: string;
-    moveTask: (taskId: string, newStatus: string) => void;
+    moveTask: (taskId: string, newStatus: statusTask) => Promise<void>;
 };
 
 const ColumnTask: React.FC<ColumnProps> = ({
@@ -21,7 +21,7 @@ const ColumnTask: React.FC<ColumnProps> = ({
 
     const [{isOver}, drop] = useDrop({
         accept: "TASK",
-        drop: (item: {id: string}) => moveTask(item.id, status),
+        drop: (item: {id: string}) => moveTask(item.id, status as statusTask),
         collect: (monitor) => ({
             isOver: !!monitor.isOver(),
         }),
