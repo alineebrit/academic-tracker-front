@@ -39,7 +39,18 @@ const TaskList: React.FC = () => {
     };
 
     if (isLoading) {
-        return <div className="loading">Carregando tarefas...</div>;
+        return (
+            <div
+                className="loading"
+                style={{
+                    display: "flex",
+                    justifyContent: "center",
+                    paddingTop: "15%",
+                }}
+            >
+                <img src="../../../loading2.svg" alt="Carregando..." />
+            </div>
+        );
     }
 
     return (
