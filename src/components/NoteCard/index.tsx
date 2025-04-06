@@ -7,13 +7,19 @@ import {notesApi} from "../../service/NoteService";
 import {Note} from "../../types/Note";
 type NoteCardProps = {
     note: Note;
+    onDelete: (id: number) => void;
 };
 
-const NoteCard: React.FC<NoteCardProps> = ({note}) => {
+const NoteCard: React.FC<NoteCardProps> = ({note, onDelete}) => {
     const ref = useRef<HTMLDivElement | null>(null);
 
-    const handleDelete = () => {
-        notesApi.remove(note.id);
+    const handleDelete = async () => {
+        try {
+            await notesApi.remove(note.id);
+            onDelete(note.id);
+        } catch (err) {
+            console.error("Erro ao deletar nota:", err);
+        }
     };
 
     return (
@@ -38,9 +44,8 @@ const NoteCard: React.FC<NoteCardProps> = ({note}) => {
                 <FaRegTrashAlt
                     size={22}
                     color={"#fc0335"}
-                    onClick={() => {
-                        handleDelete();
-                    }}
+                    onClick={handleDelete}
+                    style={{cursor: "pointer"}}
                 />
             </div>
 

@@ -10,10 +10,17 @@ const Sheet: React.FC = () => {
     const [notes, setNotes] = useState<Note[]>([]);
 
     useEffect(() => {
-        notesApi.list().then((res) => {
-            setNotes(res.data);
-        });
+        fetchNotes();
     }, []);
+
+    const fetchNotes = async () => {
+        const res = await notesApi.list();
+        setNotes(res.data);
+    };
+
+    const handleDeleteNote = (id: number) => {
+        setNotes((prevNotes) => prevNotes.filter((note) => note.id !== id));
+    };
 
     return (
         <>
@@ -33,9 +40,7 @@ const Sheet: React.FC = () => {
                 >
                     <h2>Listagem de Notas</h2>
                     <div
-                        style={{
-                            cursor: "pointer",
-                        }}
+                        style={{cursor: "pointer"}}
                         onClick={() => setOpen(false)}
                     >
                         <IoClose size={32} />
@@ -51,8 +56,13 @@ const Sheet: React.FC = () => {
                         overflowY: "scroll",
                     }}
                 >
-                    {notes &&
-                        notes.map((note) => <NoteCard note={note}></NoteCard>)}
+                    {notes.map((note) => (
+                        <NoteCard
+                            key={note.id}
+                            note={note}
+                            onDelete={handleDeleteNote}
+                        />
+                    ))}
                 </div>
             </div>
         </>
