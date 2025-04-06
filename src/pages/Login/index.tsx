@@ -1,7 +1,7 @@
 import {useState} from "react";
 import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
-import {FiEye, FiEyeOff} from "react-icons/fi";
+// import {FiEye, FiEyeOff} from "react-icons/fi";
 import "./style.css";
 import InputProfile from "../../components/Input";
 
@@ -11,7 +11,7 @@ export default function Login() {
 
     const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const [mostrarSenha, setMostrarSenha] = useState(false);
+    // const [mostrarSenha, setMostrarSenha] = useState(false);
 
     const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
@@ -46,7 +46,7 @@ export default function Login() {
                     <div className="input-group">
                         <div className="input-group">
                             <InputProfile
-                                type={mostrarSenha ? "text" : "password"}
+                                type={"password"}
                                 label="Senha"
                                 placeholder="Digite sua senha"
                                 value={password}

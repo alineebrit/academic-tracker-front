@@ -7,7 +7,7 @@
     background-color: var(--primary-oxford-blue);
     color: white;
     padding: 20px;
-    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.8);
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.9);
     transition: left 0.3s ease-in-out;
 }
 
@@ -31,4 +31,9 @@
 
 .toggle-btn:hover {
     background-color: #1a2b50;
+}
+
+.close-button {
+    cursor: pointer;
+    border: 1px solid red;
 }

@@ -40,18 +40,11 @@ const Header: React.FC = () => {
                             alt="Notes"
                         />
                     </a>
-                    <a href="/atividades">
-                        <img
-                            className="icon"
-                            src="../../../homework.png"
-                            alt="Atividade"
-                        />
-                    </a>
                     <a href="/perfil">
                         <img
                             className="icon"
                             src="../../../user.png"
-                            alt="PErfil"
+                            alt="Perfil"
                         />
                     </a>
                 </nav>
