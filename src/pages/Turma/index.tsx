@@ -22,6 +22,7 @@ const Turma: React.FC = () => {
     const [turmas, setTurmas] = useState<TurmaType[]>([]);
     const [expandedTurmaId, setExpandedTurmaId] = useState<number | null>(null);
     const [loading, setLoading] = useState(true);
+    const [loadingGrupo, setLoadingGrupo] = useState(false);
     const [name, setName] = useState("");
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -39,6 +40,7 @@ const Turma: React.FC = () => {
 
     const fetchGruposByTurma = async (turmaId: number) => {
         try {
+            setLoadingGrupo(true);
             const res = await grupoApi.getGroupsByTurmaId(turmaId);
             setTurmas((prev) =>
                 prev.map((turma) =>
@@ -49,15 +51,21 @@ const Turma: React.FC = () => {
             );
         } catch (err) {
             console.error("Erro ao buscar grupos", err);
+        } finally {
+            setLoadingGrupo(false);
         }
     };
 
     const toggleExpand = (turmaId: number) => {
-        if (expandedTurmaId === turmaId) {
-            setExpandedTurmaId(null);
-        } else {
-            setExpandedTurmaId(turmaId);
-            fetchGruposByTurma(turmaId);
+        try {
+            if (expandedTurmaId === turmaId) {
+                setExpandedTurmaId(null);
+            } else {
+                setExpandedTurmaId(turmaId);
+                fetchGruposByTurma(turmaId);
+            }
+        } catch (error) {
+            console.error("Não foi possível buscar os grupos", error);
         }
     };
 
@@ -91,7 +99,10 @@ const Turma: React.FC = () => {
                 <div style={{flex: 1, paddingLeft: "4%"}}>
                     <h2>Turmas Disponíveis</h2>
                     {loading ? (
-                        <p>Carregando...</p>
+                        <img
+                            src="../../../public/loading.svg"
+                            alt="Carregando..."
+                        />
                     ) : (
                         <ul style={{paddingLeft: "1rem"}}>
                             {turmas.map((turma) => (
@@ -130,26 +141,48 @@ const Turma: React.FC = () => {
                                         </button>
                                     </div>
 
-                                    {expandedTurmaId === turma.id && (
-                                        <ul
-                                            style={{
-                                                marginTop: "0.5rem",
-                                                marginLeft: "1.5rem",
-                                            }}
-                                        >
-                                            {turma.grupos?.length ? (
-                                                turma.grupos.map((grupo) => (
-                                                    <li key={grupo.id}>
-                                                        {grupo.name}
+                                    {expandedTurmaId === turma.id &&
+                                        (!loadingGrupo ? (
+                                            <ul
+                                                style={{
+                                                    marginTop: "0.2rem",
+                                                    marginLeft: "1.5rem",
+                                                }}
+                                            >
+                                                {turma.grupos?.length ? (
+                                                    <div
+                                                        style={{
+                                                            display: "flex",
+                                                            gap: "10px",
+                                                            flexDirection:
+                                                                "column",
+                                                        }}
+                                                    >
+                                                        {turma.grupos.map(
+                                                            (grupo) => (
+                                                                <li
+                                                                    key={
+                                                                        grupo.id
+                                                                    }
+                                                                >
+                                                                    Grupo ID:{" "}
+                                                                    {grupo.id}
+                                                                    <br />
+                                                                    Nome:{" "}
+                                                                    {grupo.name}
+                                                                </li>
+                                                            )
+                                                        )}
+                                                    </div>
+                                                ) : (
+                                                    <li>
+                                                        Nenhum grupo cadastrado.
                                                     </li>
-                                                ))
-                                            ) : (
-                                                <li>
-                                                    Nenhum grupo cadastrado.
-                                                </li>
-                                            )}
-                                        </ul>
-                                    )}
+                                                )}
+                                            </ul>
+                                        ) : (
+                                            <img src="../../../public/loading.svg"></img>
+                                        ))}
                                 </li>
                             ))}
                         </ul>
@@ -183,7 +216,7 @@ const Turma: React.FC = () => {
                             disabled={isSubmitting}
                             style={{
                                 padding: "0.75rem",
-                                backgroundColor: "#1e90ff",
+                                backgroundColor: "hsl(223, 54%, 35%)",
                                 color: "#fff",
                                 border: "none",
                                 borderRadius: "8px",
