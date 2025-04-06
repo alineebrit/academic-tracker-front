@@ -2,7 +2,7 @@ export type Task = {
     id: string;
     description: string;
     title: string;
-    grupoId: string | null;
+    grupoId: number | null | undefined;
     dueDate: Date | null;
     status: statusTask;
 };
