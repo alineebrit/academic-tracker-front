@@ -3,7 +3,7 @@ import "./styles/global.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Cadastro from "./pages/Cadastro";
-import Grupos from "./pages/Grupos";
+
 import Atividades from "./pages/Atividade/index";
 import NotFound from "./pages/NotFound";
 import Note from "./pages/Notes/index";
@@ -13,6 +13,7 @@ import {AuthProvider} from "./contexts/AuthContext";
 import PerfilPage from "./pages/Perfil";
 import Login from "./pages/Login";
 import Turma from "./pages/Turma";
+import GrupoPage from "./pages/Grupo";
 
 const AppRoutes = () => {
     return (
@@ -41,7 +42,7 @@ const AppRoutes = () => {
                 path="/grupos"
                 element={
                     <PrivateRoute>
-                        <Grupos />
+                        <GrupoPage />
                     </PrivateRoute>
                 }
             />
