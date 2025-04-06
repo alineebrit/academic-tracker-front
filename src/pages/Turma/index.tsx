@@ -5,6 +5,7 @@ import {turmaApi} from "../../service/TurmaService";
 import {AuthContext} from "../../contexts/AuthContext";
 import {FaPlus, FaMinus} from "react-icons/fa";
 import {grupoApi} from "../../service/GrupoService";
+import {FaRegTrashAlt} from "react-icons/fa";
 
 type GrupoType = {
     id: number;
@@ -53,6 +54,18 @@ const Turma: React.FC = () => {
             console.error("Erro ao buscar grupos", err);
         } finally {
             setLoadingGrupo(false);
+        }
+    };
+
+    const handleDelete = async (id: number) => {
+        try {
+            setLoading(true);
+            await turmaApi.remove(id);
+            fetchTurmas();
+        } catch (error) {
+            console.error("Não foi possível deletar", error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -120,25 +133,57 @@ const Turma: React.FC = () => {
                                             borderRadius: "8px",
                                         }}
                                     >
-                                        <span style={{fontWeight: "bold"}}>
-                                            {turma.name}
-                                        </span>
-                                        <button
-                                            onClick={() =>
-                                                toggleExpand(turma.id)
-                                            }
+                                        <span
                                             style={{
-                                                background: "none",
-                                                border: "none",
-                                                cursor: "pointer",
+                                                fontWeight: "bold",
+                                                fontSize: "19px",
+                                                color: "#468189",
                                             }}
                                         >
-                                            {expandedTurmaId === turma.id ? (
-                                                <FaMinus size={18} />
-                                            ) : (
-                                                <FaPlus size={18} />
-                                            )}
-                                        </button>
+                                            {turma.name}
+                                        </span>
+                                        <div
+                                            style={{
+                                                display: "flex",
+                                                gap: "16px",
+                                            }}
+                                        >
+                                            <button
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
+                                                    cursor: "pointer",
+                                                }}
+                                                onClick={() =>
+                                                    handleDelete(turma.id)
+                                                }
+                                            >
+                                                <FaRegTrashAlt
+                                                    size={18}
+                                                    color={"#9dbebb"}
+                                                    style={{
+                                                        cursor: "pointer",
+                                                    }}
+                                                />
+                                            </button>
+                                            <button
+                                                onClick={() =>
+                                                    toggleExpand(turma.id)
+                                                }
+                                                style={{
+                                                    background: "none",
+                                                    border: "none",
+                                                    cursor: "pointer",
+                                                }}
+                                            >
+                                                {expandedTurmaId ===
+                                                turma.id ? (
+                                                    <FaMinus size={18} />
+                                                ) : (
+                                                    <FaPlus size={18} />
+                                                )}
+                                            </button>
+                                        </div>
                                     </div>
 
                                     {expandedTurmaId === turma.id &&
@@ -165,10 +210,15 @@ const Turma: React.FC = () => {
                                                                         grupo.id
                                                                     }
                                                                 >
-                                                                    Grupo ID:{" "}
+                                                                    <strong>
+                                                                        Grupo
+                                                                        ID:{" "}
+                                                                    </strong>
                                                                     {grupo.id}
                                                                     <br />
-                                                                    Nome:{" "}
+                                                                    <strong>
+                                                                        Nome:{" "}
+                                                                    </strong>
                                                                     {grupo.name}
                                                                 </li>
                                                             )
