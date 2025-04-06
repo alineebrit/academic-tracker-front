@@ -1,0 +1,32 @@
+.input-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.5rem;
+    justify-content: center;
+    align-items: center;
+    gap: 6px;
+    width: 100%;
+}
+
+.input-label {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    font-weight: 600;
+    font-size: 18px;
+    color: var(--primary-oxford-blue);
+}
+
+.input-field {
+    border-radius: 8px;
+    background-color: hsl(223, 54%, 11%);
+    color: white;
+    height: 2rem;
+    font-size: 18px;
+    transition: border 0.3s ease, background-color 0.3s ease;
+}
+
+.input-field:focus {
+    border-color: hsl(223, 54%, 60%);
+    background-color: hsl(223, 54%, 20%);
+}

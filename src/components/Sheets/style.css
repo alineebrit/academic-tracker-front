@@ -1,0 +1,40 @@
+.sheet {
+    position: fixed;
+    top: 0;
+    left: -300px;
+    width: 300px;
+    height: 100vh;
+    background-color: var(--primary-oxford-blue);
+    color: white;
+    padding: 20px;
+    box-shadow: 2px 0 12px rgba(0, 0, 0, 0.9);
+    transition: left 0.3s ease-in-out;
+    z-index: 1000;
+}
+
+.sheet.open {
+    left: 0;
+}
+
+.toggle-btn {
+    position: fixed;
+    top: 50%;
+    left: 2rem;
+    background-color: var(--primary-oxford-blue);
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    cursor: pointer;
+    border-radius: 5px;
+    transform: translateY(-50%);
+    transition: background-color 0.3s;
+}
+
+.toggle-btn:hover {
+    background-color: #1a2b50;
+}
+
+.close-button {
+    cursor: pointer;
+    border: 1px solid red;
+}
