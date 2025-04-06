@@ -1,8 +1,9 @@
 import {useState} from "react";
-import {useAuth} from "../hooks/useAuth";
+import {useAuth} from "../../hooks/useAuth";
 import {useNavigate} from "react-router-dom";
 import {FiEye, FiEyeOff} from "react-icons/fi";
-import "../styles/global.css";
+import "./style.css";
+import InputProfile from "../../components/Input";
 
 export default function Login() {
     const {login} = useAuth();
@@ -23,13 +24,18 @@ export default function Login() {
     return (
         <div className="container">
             <div className="login-box">
-                <h1>Academic Tracker</h1>
+                <div className="logo-wrapper">
+                    <img
+                        src="../../../AcademicTrackerWoutBackground.png"
+                        alt="Academic Tracker"
+                    />
+                </div>
 
-                <form onSubmit={handleSubmit}>
+                <form onSubmit={handleSubmit} style={{marginTop: "20px"}}>
                     <div className="input-group">
-                        <label>Usuário / Email</label>
-                        <input
+                        <InputProfile
                             type="email"
+                            label="Usuário / Email"
                             placeholder="Digite o seu email"
                             value={email}
                             onChange={(e) => setEmail(e.target.value)}
@@ -38,20 +44,25 @@ export default function Login() {
                     </div>
 
                     <div className="input-group">
-                        <label>Senha</label>
                         <div className="senha-wrapper">
-                            <input
+                            <InputProfile
                                 type={mostrarSenha ? "text" : "password"}
+                                label="Senha"
                                 placeholder="Digite sua senha"
                                 value={password}
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
+
                             <span
                                 className="senha-icon"
                                 onClick={() => setMostrarSenha(!mostrarSenha)}
                             >
-                                {mostrarSenha ? <FiEyeOff /> : <FiEye />}
+                                {mostrarSenha ? (
+                                    <FiEyeOff color="#fff" />
+                                ) : (
+                                    <FiEye color="#fff" />
+                                )}
                             </span>
                         </div>
                     </div>

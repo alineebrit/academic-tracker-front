@@ -2,7 +2,6 @@ import {BrowserRouter as Router, Routes, Route} from "react-router-dom";
 import "./styles/global.css";
 import "react-datepicker/dist/react-datepicker.css";
 
-import Login from "./pages/Login";
 import Cadastro from "./pages/Cadastro";
 import Turmas from "./pages/Turmas";
 import Grupos from "./pages/Grupos";
@@ -13,6 +12,7 @@ import Dashboard from "./pages/Dashboard/index";
 import PrivateRoute from "./routes/PrivateRoute";
 import {AuthProvider} from "./contexts/AuthContext";
 import PerfilPage from "./pages/Perfil";
+import Login from "./pages/Login";
 
 const AppRoutes = () => {
     return (
