@@ -65,6 +65,21 @@ const GrupoPage: React.FC = () => {
         }
     };
 
+    const handleDeleteGrupo = async (id: number) => {
+        const confirm = window.confirm(
+            "Tem certeza que deseja excluir este grupo?"
+        );
+        if (!confirm) return;
+
+        try {
+            await grupoApi.remove(id);
+            setGrupos((prev) => prev.filter((g) => g.id !== id));
+        } catch (err) {
+            console.error("Erro ao excluir grupo", err);
+            alert("Erro ao excluir grupo.");
+        }
+    };
+
     useEffect(() => {
         fetchGrupos();
         fetchTurmas();
@@ -93,10 +108,32 @@ const GrupoPage: React.FC = () => {
                                         marginBottom: "1rem",
                                         padding: "1rem",
                                         borderRadius: "8px",
+                                        display: "flex",
+                                        justifyContent: "space-between",
+                                        alignItems: "center",
                                     }}
                                 >
-                                    <strong>Nome:</strong> {grupo.name} <br />
-                                    <strong>Turma ID:</strong> {grupo.turmaId}
+                                    <div>
+                                        <strong>Nome:</strong> {grupo.name}{" "}
+                                        <br />
+                                        <strong>Turma ID:</strong>{" "}
+                                        {grupo.turmaId}
+                                    </div>
+                                    <button
+                                        onClick={() =>
+                                            handleDeleteGrupo(grupo.id)
+                                        }
+                                        style={{
+                                            padding: "0.5rem 1rem",
+                                            backgroundColor: "#e74c3c",
+                                            color: "#fff",
+                                            border: "none",
+                                            borderRadius: "8px",
+                                            cursor: "pointer",
+                                        }}
+                                    >
+                                        Excluir
+                                    </button>
                                 </li>
                             ))}
                         </ul>
