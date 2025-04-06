@@ -3,7 +3,7 @@ export type Task = {
     description: string;
     title: string;
     grupoId: number | null | undefined;
-    dueDate: Date | null;
+    dueDate: string | null | undefined;
     status: statusTask;
 };
 

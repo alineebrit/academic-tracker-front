@@ -1,217 +1,154 @@
-import {useState, useRef} from "react";
-import DatePicker from "react-datepicker";
-import "react-datepicker/dist/react-datepicker.css";
-import "./style.css";
-import {ptBR} from "date-fns/locale";
+import React, {useState, useContext} from "react";
+import {AuthContext} from "../../contexts/AuthContext";
 import Header from "../../components/Header";
-import {Atividade} from "../../types/Atividade";
+import Sheet from "../../components/Sheets";
+import {tasksApi} from "../../service/TasksService";
+import {statusTask} from "../../types/Task";
+import {Role} from "../../types/User";
 
-export default function Atividades() {
-    const [atividades, setAtividades] = useState<Atividade[]>([]);
-    const [novaAtividade, setNovaAtividade] = useState<Atividade>({
-        title: "",
-        description: "",
-        dueDate: null,
-        grupoId: null,
-    });
-    const [editandoId, setEditandoId] = useState<number | null>(null);
-    const textareaRef = useRef<HTMLTextAreaElement>(null);
+const CreateActivityForm = () => {
+    const auth = useContext(AuthContext);
+    const [title, setTitle] = useState("");
+    const [description, setDescription] = useState("");
+    const [dueDate, setDueDate] = useState<string>("");
+    const [grupoId, setGrupoId] = useState<number | undefined | null>(
+        auth?.user?.grupoId
+    );
+    const [status, setStatus] = useState<statusTask>(statusTask.NAO_INICIADA);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const handleChange = (
-        e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
-    ) => {
-        const {name, value} = e.target;
-        setNovaAtividade((prev) => ({
-            ...prev,
-            [name]: name === "grupoId" ? Number(value) : value,
-        }));
-
-        if (name === "description" && textareaRef.current) {
-            textareaRef.current.style.height = "40px";
-            textareaRef.current.style.height = `${textareaRef.current.scrollHeight}px`;
-        }
-    };
-
-    const handleDateChange = (date: Date | null) => {
-        setNovaAtividade((prev) => ({
-            ...prev,
-            dueDate: date,
-        }));
-    };
-
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
+        setIsSubmitting(true);
 
-        if (
-            !novaAtividade.title ||
-            !novaAtividade.dueDate ||
-            !novaAtividade.grupoId
-        ) {
-            alert("Preencha todos os campos obrigatórios.");
-            return;
-        }
+        try {
+            await tasksApi.create({
+                title,
+                description,
+                dueDate,
+                grupoId: Number(grupoId),
+                status,
+            });
 
-        if (editandoId !== null) {
-            setAtividades((prev) =>
-                prev.map((a) =>
-                    a.id === editandoId ? {...novaAtividade, id: editandoId} : a
-                )
-            );
-            setEditandoId(null);
-        } else {
-            const nova = {
-                ...novaAtividade,
-                id: Date.now(),
-            };
-            setAtividades((prev) => [...prev, nova]);
-        }
-
-        setNovaAtividade({
-            title: "",
-            description: "",
-            dueDate: null,
-            grupoId: null,
-        });
-
-        if (textareaRef.current) {
-            textareaRef.current.style.height = "40px";
-        }
-    };
-
-    const handleEditar = (atividade: Atividade) => {
-        setNovaAtividade(atividade);
-        setEditandoId(atividade.id ?? null);
-
-        if (textareaRef.current) {
-            setTimeout(() => {
-                textareaRef.current!.style.height = "40px";
-                textareaRef.current!.style.height = `${
-                    textareaRef.current!.scrollHeight
-                }px`;
-            }, 0);
-        }
-    };
-
-    const handleExcluir = (id?: number) => {
-        if (!id) return;
-        if (confirm("Deseja excluir esta atividade?")) {
-            setAtividades((prev) => prev.filter((a) => a.id !== id));
+            alert("Atividade criada com sucesso!");
+            setTitle("");
+            setDescription("");
+            setDueDate("");
+            setStatus(statusTask.NAO_INICIADA);
+        } catch (err) {
+            console.error("Erro ao criar atividade", err);
+            alert("Erro ao criar a atividade.");
+        } finally {
+            setIsSubmitting(false);
         }
     };
 
     return (
         <>
             <Header />
-            <div className="container">
-                <div className="login-box">
-                    <h2 style={{marginBottom: "1rem"}}>
-                        {editandoId ? "Editar Atividade" : "Criar Atividade"}
+            <Sheet />
+            <div
+                style={{
+                    display: "flex",
+                    padding: "2rem",
+                    alignItems: "center",
+                    justifyContent: "center",
+                }}
+            >
+                <div style={{flex: 1, maxWidth: "400px"}}>
+                    <h2 style={{marginBottom: "1rem", fontSize: "1.5rem"}}>
+                        Criar Nova Atividade
                     </h2>
-
-                    <form onSubmit={handleSubmit} className="atividades-form">
-                        <div className="input-group">
-                            <label>Título *</label>
-                            <input
-                                type="text"
-                                name="title"
-                                value={novaAtividade.title}
-                                onChange={handleChange}
-                                placeholder="Escreva o título"
-                                required
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>Descrição</label>
-                            <textarea
-                                name="description"
-                                value={novaAtividade.description || ""}
-                                onChange={handleChange}
-                                ref={textareaRef}
-                                rows={3}
-                                placeholder="Escreva algo..."
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>Data de entrega *</label>
-                            <DatePicker
-                                selected={novaAtividade.dueDate}
-                                onChange={handleDateChange}
-                                placeholderText="Selecione a data de entrega"
-                                dateFormat="dd/MM/yyyy"
-                                locale={ptBR}
-                                className="input-date"
-                                required
-                                minDate={new Date()}
-                            />
-                        </div>
-
-                        <div className="input-group">
-                            <label>ID do Grupo *</label>
-                            <input
-                                type="number"
-                                name="grupoId"
-                                value={novaAtividade.grupoId ?? ""}
-                                onChange={handleChange}
-                                required
-                            />
-                        </div>
-
-                        <button type="submit" className="salvar-atividade">
-                            {editandoId ? "Atualizar" : "Salvar Atividade"}
+                    <form
+                        onSubmit={handleSubmit}
+                        style={{
+                            display: "flex",
+                            flexDirection: "column",
+                            gap: "1rem",
+                        }}
+                    >
+                        <input
+                            type="text"
+                            placeholder="Título"
+                            value={title}
+                            onChange={(e) => setTitle(e.target.value)}
+                            required
+                            style={{
+                                padding: "0.75rem",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                            }}
+                        />
+                        <input
+                            placeholder="Descrição"
+                            value={description}
+                            onChange={(e) => setDescription(e.target.value)}
+                            style={{
+                                padding: "0.75rem",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                            }}
+                        />
+                        <input
+                            type="date"
+                            value={dueDate}
+                            onChange={(e) => setDueDate(e.target.value)}
+                            style={{
+                                padding: "0.75rem",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                            }}
+                        />
+                        <input
+                            type="number"
+                            placeholder="Grupo ID"
+                            value={grupoId || ""}
+                            onChange={(e) => setGrupoId(Number(e.target.value))}
+                            required
+                            disabled={auth?.user?.role == Role.ALUNO}
+                            style={{
+                                padding: "0.75rem",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                            }}
+                        />
+                        <select
+                            value={status}
+                            onChange={(
+                                e: React.ChangeEvent<HTMLSelectElement>
+                            ) => setStatus(e.target.value as statusTask)}
+                            style={{
+                                padding: "0.75rem",
+                                borderRadius: "8px",
+                                border: "1px solid #ccc",
+                            }}
+                        >
+                            {Object.values(statusTask).map((s) => (
+                                <option key={s} value={s}>
+                                    {s.replace(/_/g, " ")}
+                                </option>
+                            ))}
+                        </select>
+                        <button
+                            type="submit"
+                            disabled={isSubmitting}
+                            style={{
+                                background: "hsl(223, 54%, 11%)",
+                                color: "#fff",
+                                padding: "0.75rem",
+                                border: "none",
+                                borderRadius: "8px",
+                                fontWeight: "bold",
+                                cursor: "pointer",
+                            }}
+                        >
+                            {isSubmitting ? "Salvando..." : "Salvar Atividade"}
                         </button>
                     </form>
                 </div>
-
-                {atividades.length > 0 && (
-                    <div style={{marginTop: "2rem", textAlign: "left"}}>
-                        <h3>📋 Atividades Criadas:</h3>
-                        <ul>
-                            {atividades.map((a) => (
-                                <li
-                                    key={a.id}
-                                    style={{
-                                        marginBottom: "1rem",
-                                        padding: "0.75rem",
-                                        backgroundColor: "#f9fafb",
-                                        border: "1px solid #e5e7eb",
-                                        borderRadius: "6px",
-                                    }}
-                                >
-                                    <strong>{a.title}</strong>
-                                    <br />
-                                    {a.description || "Sem descrição"}
-                                    <br />
-                                    📅 Entrega:{" "}
-                                    {a.dueDate
-                                        ? new Date(
-                                              a.dueDate
-                                          ).toLocaleDateString()
-                                        : "-"}{" "}
-                                    | Grupo: {a.grupoId}
-                                    <div
-                                        style={{
-                                            marginTop: "0.5rem",
-                                            display: "flex",
-                                            gap: "0.5rem",
-                                        }}
-                                    >
-                                        <button onClick={() => handleEditar(a)}>
-                                            ✏️ Editar
-                                        </button>
-                                        <button
-                                            onClick={() => handleExcluir(a.id)}
-                                        >
-                                            🗑️ Excluir
-                                        </button>
-                                    </div>
-                                </li>
-                            ))}
-                        </ul>
-                    </div>
-                )}
             </div>
         </>
     );
-}
+};
+
+export default CreateActivityForm;

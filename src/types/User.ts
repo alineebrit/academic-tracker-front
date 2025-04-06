@@ -1,4 +1,3 @@
-import {statusTask} from "./Task";
 import {Turma} from "./Turma";
 
 export interface User {
@@ -6,6 +5,12 @@ export interface User {
     name: string;
     email: string;
     grupoId: number | null;
-    role: statusTask;
+    role: Role;
     turmas?: Turma[];
+}
+
+export enum Role {
+    ADMIN = "ADMIN",
+    ALUNO = "ALUNO",
+    PROFESSOR = "PROFESSOR",
 }
