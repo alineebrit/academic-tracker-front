@@ -5,6 +5,8 @@
     padding: 12px;
     cursor: grab;
     transition: transform 0.2s;
+    position: relative;
+    z-index: 1;
 }
 
 .kanban-task:active {

@@ -6,14 +6,18 @@ import {getStatusLabel, statusTask, Task} from "../../types/Task";
 import "./style.css";
 import {tasksApi} from "../../service/TasksService";
 
-const TaskList: React.FC = () => {
+type Props = {
+    grupoId?: number | null;
+};
+
+const TaskList: React.FC<Props> = ({grupoId}) => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
     const loadTasks = async () => {
         try {
             setIsLoading(true);
-            const res = await tasksApi.list();
+            const res = await tasksApi.list(grupoId);
             setTasks(res.data.data);
         } catch (err) {
             console.error("Erro ao buscar tasks:", err);
