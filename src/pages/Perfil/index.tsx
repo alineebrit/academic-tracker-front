@@ -28,7 +28,7 @@ const Profile = () => {
         try {
             const token = localStorage.getItem("token");
 
-            await axios.put(
+            const response = await axios.put(
                 `http://localhost:3000/user/${auth?.user?.id}`,
                 {
                     name,
@@ -41,7 +41,7 @@ const Profile = () => {
                     },
                 }
             );
-
+            auth?.setUser(response.data.data);
             alert("Perfil atualizado com sucesso!");
         } catch (error) {
             console.error("Erro ao salvar:", error);
@@ -63,7 +63,6 @@ const Profile = () => {
                     alignItems: "center",
                     marginTop: "3rem",
                     flexDirection: "column",
-                    border: "1px solid red",
                 }}
             >
                 <h2>Perfil do Usuário</h2>
@@ -92,13 +91,16 @@ const Profile = () => {
 
                     <InputProfile
                         label="Grupo"
-                        value={grupoId?.toString() || ""}
+                        value={grupoId || null}
                         onChange={(e) => setGrupoId(parseInt(e.target.value))}
-                        type="text"
-                        required
+                        type="number"
                     />
 
-                    <button type="submit" disabled={isSaving}>
+                    <button
+                        type="submit"
+                        disabled={isSaving}
+                        className="button"
+                    >
                         {isSaving ? "Salvando..." : "Salvar"}
                     </button>
                 </form>

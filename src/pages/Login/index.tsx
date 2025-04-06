@@ -44,7 +44,7 @@ export default function Login() {
                     </div>
 
                     <div className="input-group">
-                        <div className="senha-wrapper">
+                        <div className="input-group">
                             <InputProfile
                                 type={mostrarSenha ? "text" : "password"}
                                 label="Senha"
@@ -53,17 +53,6 @@ export default function Login() {
                                 onChange={(e) => setPassword(e.target.value)}
                                 required
                             />
-
-                            <span
-                                className="senha-icon"
-                                onClick={() => setMostrarSenha(!mostrarSenha)}
-                            >
-                                {mostrarSenha ? (
-                                    <FiEyeOff color="#fff" />
-                                ) : (
-                                    <FiEye color="#fff" />
-                                )}
-                            </span>
                         </div>
                     </div>
 

@@ -3,7 +3,7 @@ import "./style.css";
 
 type InputProfileProps = {
     label?: string;
-    value: string;
+    value: string | number | null;
     onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
     type?: string;
     disabled?: boolean;
@@ -28,11 +28,12 @@ const InputProfile: React.FC<InputProfileProps> = ({
             <input
                 className="input-field"
                 type={type}
-                value={value}
+                value={value || undefined}
                 onChange={onChange}
                 placeholder={placeholder}
                 disabled={disabled}
                 required={required}
+                style={{maxWidth: "380px", minHeight: "32px"}}
             />
         </div>
     );
