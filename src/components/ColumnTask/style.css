@@ -26,8 +26,9 @@
     padding: 0.5rem;
     justify-content: space-between;
     align-items: center;
+    padding-left: 5%;
     margin: 0.3rem;
     border: 1px solid var(--cambridge-blue);
     border-radius: 16px;
-    box-shadow: 1px 1px 1px var(--primary-oxford-blue-light);
+    box-shadow: 2px 2px 5px var(--primary-oxford-blue);
 }

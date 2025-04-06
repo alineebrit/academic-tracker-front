@@ -1,14 +1,16 @@
-import React, {useRef, useEffect} from "react";
+import React, {useRef, useEffect, useState} from "react";
 import {useDrop} from "react-dnd";
 import TaskCard from "../TaskCard";
 import {ColorStatus, statusTask, Task} from "../../types/Task";
 import "./style.css";
+import {tasksApi} from "../../service/TasksService";
 
 type ColumnProps = {
     status: string;
     tasks: Task[];
     description: string;
     moveTask: (taskId: string, newStatus: statusTask) => Promise<void>;
+    onRefresh?: () => void; // opcional, caso queira controlar do pai
 };
 
 const ColumnTask: React.FC<ColumnProps> = ({
@@ -16,8 +18,10 @@ const ColumnTask: React.FC<ColumnProps> = ({
     tasks,
     description,
     moveTask,
+    onRefresh,
 }) => {
     const ref = useRef<HTMLDivElement | null>(null);
+    const [, setReloadTrigger] = useState(0); // para forçar rerender se necessário
 
     const [{isOver}, drop] = useDrop({
         accept: "TASK",
@@ -32,6 +36,16 @@ const ColumnTask: React.FC<ColumnProps> = ({
             drop(ref.current);
         }
     }, [drop]);
+
+    const handleDelete = async (id: number) => {
+        try {
+            await tasksApi.remove(id);
+            // eslint-disable-next-line @typescript-eslint/no-unused-expressions
+            onRefresh ? onRefresh() : setReloadTrigger((prev) => prev + 1);
+        } catch (err) {
+            console.error("Erro ao deletar tarefa", err);
+        }
+    };
 
     return (
         <div
@@ -53,7 +67,7 @@ const ColumnTask: React.FC<ColumnProps> = ({
                     }}
                 ></div>
             </div>
-            <div ref={ref} className={`kanban-column ${isOver && "hovered"} `}>
+            <div ref={ref} className={`kanban-column ${isOver && "hovered"}`}>
                 <div>
                     {tasks.length > 0
                         ? tasks
@@ -62,11 +76,17 @@ const ColumnTask: React.FC<ColumnProps> = ({
                               )
                               .map((task) => (
                                   <div
+                                      key={task.id}
                                       style={{
                                           padding: "0.5rem",
                                       }}
                                   >
-                                      <TaskCard key={task.id} task={task} />
+                                      <TaskCard
+                                          task={task}
+                                          onDelete={() =>
+                                              handleDelete(parseInt(task.id))
+                                          }
+                                      />
                                   </div>
                               ))
                         : ""}

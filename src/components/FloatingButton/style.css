@@ -1,0 +1,24 @@
+.floating-create-button {
+    position: fixed;
+    bottom: 2rem;
+    right: 2rem;
+    background-color: hsl(223, 54%, 11%);
+    color: white;
+    border: none;
+    border-radius: 50%;
+    padding: 1rem;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.25);
+    cursor: pointer;
+    z-index: 1000;
+    transition: transform 0.2s ease;
+}
+
+.floating-create-button:hover {
+    transform: scale(1.05);
+}
+
+.floating-create-button .material-symbols-outlined {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}

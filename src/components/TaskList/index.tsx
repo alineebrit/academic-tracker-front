@@ -10,18 +10,20 @@ const TaskList: React.FC = () => {
     const [tasks, setTasks] = useState<Task[]>([]);
     const [isLoading, setIsLoading] = useState<boolean>(true);
 
+    const loadTasks = async () => {
+        try {
+            setIsLoading(true);
+            const res = await tasksApi.list();
+            setTasks(res.data.data);
+        } catch (err) {
+            console.error("Erro ao buscar tasks:", err);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
     useEffect(() => {
-        tasksApi
-            .list()
-            .then((res) => {
-                setTasks(res.data.data);
-            })
-            .catch((err) => {
-                console.error("Erro ao buscar tasks:", err);
-            })
-            .finally(() => {
-                setIsLoading(false);
-            });
+        loadTasks();
     }, []);
 
     const moveTask = async (taskId: string, newStatus: statusTask) => {
@@ -57,15 +59,14 @@ const TaskList: React.FC = () => {
         <DndProvider backend={HTML5Backend}>
             <div className="kanban-board">
                 {Object.entries(statusTask).map(([key, value]) => (
-                    <>
-                        <ColumnTask
-                            key={key}
-                            description={getStatusLabel(value)}
-                            status={key}
-                            tasks={tasks}
-                            moveTask={moveTask}
-                        />
-                    </>
+                    <ColumnTask
+                        key={key}
+                        description={getStatusLabel(value)}
+                        status={key}
+                        tasks={tasks}
+                        moveTask={moveTask}
+                        onRefresh={loadTasks}
+                    />
                 ))}
             </div>
         </DndProvider>
