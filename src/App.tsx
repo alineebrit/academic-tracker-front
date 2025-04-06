@@ -3,7 +3,6 @@ import "./styles/global.css";
 import "react-datepicker/dist/react-datepicker.css";
 
 import Cadastro from "./pages/Cadastro";
-import Turmas from "./pages/Turmas";
 import Grupos from "./pages/Grupos";
 import Atividades from "./pages/Atividade/index";
 import NotFound from "./pages/NotFound";
@@ -13,6 +12,7 @@ import PrivateRoute from "./routes/PrivateRoute";
 import {AuthProvider} from "./contexts/AuthContext";
 import PerfilPage from "./pages/Perfil";
 import Login from "./pages/Login";
+import Turma from "./pages/Turma";
 
 const AppRoutes = () => {
     return (
@@ -33,7 +33,7 @@ const AppRoutes = () => {
                 path="/turmas"
                 element={
                     <PrivateRoute>
-                        <Turmas />
+                        <Turma />
                     </PrivateRoute>
                 }
             />
