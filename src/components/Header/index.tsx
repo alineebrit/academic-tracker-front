@@ -4,21 +4,14 @@ const Header: React.FC = () => {
     return (
         <>
             <header className="dashboard-header">
-                <div className="logo-wrapper">
+                <a className="logo-wrapper" href="/dashboard">
                     <img
                         src="../../../AcademicTrackerWoutBackground.png"
                         alt="Academic Tracker"
                     />
-                </div>
+                </a>
 
                 <nav className="nav-links">
-                    <a href="/dashboard" title="Home">
-                        <img
-                            className="icon"
-                            src="../../../home.png"
-                            alt="Início"
-                        />
-                    </a>
                     <a href="/turmas" title="Turmas">
                         <img
                             className="icon"

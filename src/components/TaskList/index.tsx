@@ -2,7 +2,7 @@ import React, {useEffect, useState} from "react";
 import {DndProvider} from "react-dnd";
 import {HTML5Backend} from "react-dnd-html5-backend";
 import ColumnTask from "../ColumnTask/index";
-import {statusTask, Task} from "../../types/Task";
+import {getStatusLabel, statusTask, Task} from "../../types/Task";
 import "./style.css";
 import {tasksApi} from "../../service/TasksService";
 
@@ -32,7 +32,7 @@ const TaskList: React.FC = () => {
         );
 
         try {
-            await tasksApi.update(taskId, {status: newStatus});
+            await tasksApi.update(parseInt(taskId), {status: newStatus});
         } catch (error) {
             console.error("Não foi possível atualizar a raia", error);
         }
@@ -60,7 +60,7 @@ const TaskList: React.FC = () => {
                     <>
                         <ColumnTask
                             key={key}
-                            description={value}
+                            description={getStatusLabel(value)}
                             status={key}
                             tasks={tasks}
                             moveTask={moveTask}

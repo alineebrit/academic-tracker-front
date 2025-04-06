@@ -3,7 +3,7 @@ import {AuthContext} from "../../contexts/AuthContext";
 import Header from "../../components/Header";
 import Sheet from "../../components/Sheets";
 import {tasksApi} from "../../service/TasksService";
-import {statusTask} from "../../types/Task";
+import {getStatusLabel, statusTask} from "../../types/Task";
 import {Role} from "../../types/User";
 
 const CreateActivityForm = () => {
@@ -14,6 +14,7 @@ const CreateActivityForm = () => {
     const [grupoId, setGrupoId] = useState<number | undefined | null>(
         auth?.user?.grupoId
     );
+
     const [status, setStatus] = useState<statusTask>(statusTask.NAO_INICIADA);
     const [isSubmitting, setIsSubmitting] = useState(false);
 
@@ -114,9 +115,9 @@ const CreateActivityForm = () => {
                         />
                         <select
                             value={status}
-                            onChange={(
-                                e: React.ChangeEvent<HTMLSelectElement>
-                            ) => setStatus(e.target.value as statusTask)}
+                            onChange={(e) =>
+                                setStatus(e.target.value as statusTask)
+                            }
                             style={{
                                 padding: "0.75rem",
                                 borderRadius: "8px",
@@ -125,10 +126,11 @@ const CreateActivityForm = () => {
                         >
                             {Object.values(statusTask).map((s) => (
                                 <option key={s} value={s}>
-                                    {s.replace(/_/g, " ")}
+                                    {getStatusLabel(s)}
                                 </option>
                             ))}
                         </select>
+
                         <button
                             type="submit"
                             disabled={isSubmitting}
