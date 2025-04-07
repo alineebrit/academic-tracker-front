@@ -1,0 +1,6 @@
+.kanban-board {
+    display: flex;
+    gap: 16px;
+    padding: 24px;
+    height: 100%;
+}

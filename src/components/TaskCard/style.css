@@ -1,0 +1,35 @@
+.kanban-task {
+    background-color: white;
+    border-radius: 16px;
+    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.5);
+    padding: 12px;
+    cursor: grab;
+    transition: transform 0.2s;
+    position: relative;
+    z-index: 1;
+}
+
+.kanban-task:active {
+    cursor: grabbing;
+    transform: scale(1.02);
+}
+
+.delete-button {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    color: #888;
+    font-size: 1rem;
+    transition: color 0.2s;
+}
+
+.delete-button:hover {
+    color: #d11a2a;
+}
+
+.kanban-task {
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}

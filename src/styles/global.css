@@ -1,0 +1,77 @@
+body {
+    margin: 0;
+    padding: 0;
+    background-color: #f3f4f6;
+    font-family: "Inter", sans-serif;
+}
+
+:root {
+    --primary-oxford-blue: hsl(223, 54%, 11%);
+    --primary-oxford-blue-light: hsl(223, 54%, 35%);
+    --secondary-teal: #468189;
+    --cambridge-blue: #77aca2;
+    --ash-gray: #9dbebb;
+    --yellow: #e5d352;
+    --red: #fc0335;
+}
+
+.login-box h1 {
+    color: #18181b;
+    font-size: 1.75rem;
+    margin-bottom: 1.5rem;
+}
+
+.input-group {
+    text-align: left;
+    margin-bottom: 1rem;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 0.3rem;
+}
+
+.input-group input,
+.senha-wrapper input {
+    width: 100%;
+    padding: 0.5rem;
+    border-radius: 6px;
+}
+
+.button {
+    width: 100%;
+    background-color: var(--primary-oxford-blue-light);
+    color: white;
+    padding: 0.6rem;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button:hover {
+    background-color: var(--secondary-teal);
+}
+
+.senha-icon {
+    border: 1px solid red;
+}
+
+.register {
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    color: #18181b;
+    cursor: pointer;
+    text-decoration: underline;
+}
+
+.datepicker-input {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 1rem;
+}
