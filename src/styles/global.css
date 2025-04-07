@@ -52,6 +52,23 @@ body {
     transition: background-color 0.2s ease-in-out;
 }
 
+.button-red {
+    width: 100%;
+    background-color: var(--red);
+    color: white;
+    padding: 0.6rem;
+    font-weight: bold;
+    font-size: 16px;
+    border: none;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+}
+
+.button-red:hover {
+    opacity: 0.5;
+}
+
 .button:hover {
     background-color: var(--secondary-teal);
 }

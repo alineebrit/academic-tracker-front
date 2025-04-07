@@ -95,14 +95,30 @@ const Profile = () => {
                         onChange={(e) => setGrupoId(parseInt(e.target.value))}
                         type="number"
                     />
-
-                    <button
-                        type="submit"
-                        disabled={isSaving}
-                        className="button"
+                    <div
+                        style={{
+                            display: "flex",
+                            gap: "16px",
+                            flexDirection: "column",
+                        }}
                     >
-                        {isSaving ? "Salvando..." : "Salvar"}
-                    </button>
+                        <button
+                            type="submit"
+                            disabled={isSaving}
+                            className="button"
+                        >
+                            {isSaving ? "Salvando..." : "Salvar"}
+                        </button>
+
+                        <button
+                            onClick={() => {
+                                auth?.logout();
+                            }}
+                            className="button-red"
+                        >
+                            Desconectar
+                        </button>
+                    </div>
                 </form>
             </div>
         </>
